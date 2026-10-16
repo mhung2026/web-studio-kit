@@ -1,0 +1,8 @@
+{
+  "name": "web-studio-kit",
+  "displayName": "Web Studio Kit",
+  "version": "0.1.0",
+  "description": "Team agent Claude Code làm web/app: product-owner, web-design-auditor, web-tech-architect, impact-analyst, backend-engineer, frontend-engineer, web-ux-designer, web-qa-engineer, web-release-manager. Chủ dự án tự deploy.",
+  "author": { "name": "hungngominh" },
+  "keywords": ["web", "app", "subagents", "producer", "studio"]
+}

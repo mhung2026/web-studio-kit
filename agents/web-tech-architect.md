@@ -1,6 +1,6 @@
 ---
 name: web-tech-architect
-description: Kiến trúc kỹ thuật — chọn stack và version bằng tài liệu chính thức, dựng khung dự án, ranh giới module, ADR kỹ thuật, lệnh test/build; review cấu trúc code của engineer mỗi mốc. Dự án đã có code trước khi có kit: quét toàn bộ codebase để viết STUDIO.md/ENGINEERING.md phản ánh thực tế đang chạy.
+description: Kiến trúc kỹ thuật — chọn stack và version bằng tài liệu chính thức, dựng khung dự án, ranh giới module, ADR kỹ thuật, lệnh test/build; review cấu trúc code của engineer mỗi mốc. Dự án đã có code trước khi có kit — quét toàn bộ codebase để viết STUDIO.md/ENGINEERING.md phản ánh thực tế đang chạy.
 tools: Read, Grep, Glob, Write, Edit, Bash, WebFetch, WebSearch, Skill
 disallowedTools: Agent
 model: opus

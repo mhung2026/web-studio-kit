@@ -1,0 +1,12 @@
+{
+  "name": "web-studio-kit",
+  "owner": { "name": "hungngominh" },
+  "description": "Marketplace riêng của web-studio-kit — team agent Claude Code làm web/app, từ yêu cầu đến code chạy được, test qua.",
+  "plugins": [
+    {
+      "name": "web-studio-kit",
+      "source": ".",
+      "description": "Team agent Claude Code làm web/app, từ yêu cầu đến code chạy được, test qua. Chủ dự án tự deploy."
+    }
+  ]
+}

@@ -12,11 +12,24 @@ Kit này là bản nhân từ `game-studio-kit` (cùng chủ dự án, cùng cơ
 - `docs/specs/`, `docs/plans/` — thiết kế và kế hoạch.
 
 ## Cài đặt
+
+**Cách 1 — plugin marketplace (khuyên dùng để chia sẻ):** repo này tự là marketplace của chính nó (`.claude-plugin/marketplace.json`).
+```
+/plugin marketplace add E:\Working\web-studio-kit
+/plugin install web-studio-kit@web-studio-kit
+```
+Khi đã đưa repo lên git host (GitHub...), thay bằng:
+```
+/plugin install web-studio-kit --marketplace <owner>/<repo>
+```
+Agent/skill cài qua đường này được namespace theo plugin (`web-studio-kit:product-owner`...), không trùng với bất kỳ kit nào khác dù tên gốc giống nhau.
+
+**Cách 2 — script cài trực tiếp vào `~/.claude` (không namespace, dùng tên trần `product-owner`...):**
 ```powershell
 python -m unittest discover -s tests
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
-Sau đó mở phiên Claude Code mới hoặc Reload Window. Cài song song với `game-studio-kit` an toàn — hai kit không chia sẻ tên agent nào.
+Sau đó mở phiên Claude Code mới hoặc Reload Window. Cài song song với `game-studio-kit` an toàn theo cách này — hai kit không chia sẻ tên agent nào (xem phần trên).
 
 ## Dùng
 Trong thư mục dự án web/app:
