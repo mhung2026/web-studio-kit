@@ -44,7 +44,7 @@ Không dùng `superpowers:subagent-driven-development` và `superpowers:executin
 4. Có `studio/` → đọc `studio/STATUS.md`, `studio/DECISIONS_PENDING.md`, `studio/BACKLOG.md`.
    - Sentinel dừng: một dòng có nội dung **đúng bằng** `PAUSE` (regex `^PAUSE$`) → báo trạng thái và dừng.
    - Có câu trả lời mới cho D-NNN → cập nhật ADR/backlog liên quan rồi tiếp tục.
-   - So dòng `Kit-version` trong `studio/templates/*.md` với dòng `Kit-version` ở cuối skill này. Khác → mở phiếu nâng cấp: copy template mới vào `studio/templates/`; thay đổi ở `templates/ENGINEERING.md` thì giao `web-tech-architect` hợp nhất vào `studio/ENGINEERING.md` (cấp D).
+   - So dòng `Kit-version` trong `studio/templates/*.md` với dòng `Kit-version` ở cuối skill này. Khác → mở phiếu nâng cấp: copy template mới vào `studio/templates/`; thay đổi ở `templates/ENGINEERING.md` thì giao `web-tech-architect` hợp nhất vào `studio/ENGINEERING.md` (cấp D); thay đổi ở bảng "Lệnh kiểm chứng" của `templates/STUDIO.md` (dòng mới) thì Producer tự thêm đúng các dòng mới đó vào `studio/STUDIO.md` thật của dự án (Producer sở hữu file này), giá trị `none` cho tới khi có lệnh thật. Dòng mới thêm do nâng cấp: miễn trừ cổng cho mốc đang chạy lúc nâng cấp; từ mốc kế tiếp áp dụng như lệnh bắt buộc bình thường (quy tắc `none` ở mục "Kiểm sau mỗi báo cáo").
 5. Người dùng chỉ định việc cụ thể ("làm M2", "rà docs 03", "đánh giá tác động trước khi sửa X") → làm đúng việc đó theo quy trình bên dưới, rồi quay lại chế độ thường.
 
 ## Khởi tạo

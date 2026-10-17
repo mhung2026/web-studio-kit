@@ -24,6 +24,6 @@ jobs:
       - name: Build
         run: echo "TODO web-tech-architect: lenh Build tu bang Lenh kiem chung"
       - name: Quet lo hong dependency
-        run: echo "TODO web-tech-architect: vd npm audit --audit-level=high"
+        run: echo "TODO web-tech-architect: vd npm audit --audit-level=high (phat hien chua co ban va -> ADR/D-NNN trong ENGINEERING.md SS6, khong de chan cong vinh vien)"
       - name: SAST Semgrep
-        run: echo "TODO web-tech-architect: vd semgrep scan --config p/ci --error (khong dung che do auto)"
+        run: echo "TODO web-tech-architect: semgrep scan --config .semgrep/rules.yml --severity ERROR --error --metrics=off (KHONG dung --config p/ci hay auto, ca hai deu goi Semgrep Registry; ruleset tai mot lan qua Dieu kien dung muc 5)"
