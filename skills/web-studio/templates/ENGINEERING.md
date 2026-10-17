@@ -11,6 +11,8 @@
 | Package manager + lockfile | |
 | Công cụ lint / format / typecheck / test | |
 | Kiểm ranh giới lớp tự động (vd. dependency-cruiser, eslint boundaries) | |
+| Công cụ quét bảo mật (dependency audit + SAST) | |
+| CI (workflow, vd. GitHub Actions) | |
 
 ## 2. Chuẩn code [Ngay]
 - Strict typing bật đầy đủ (TypeScript: `strict: true`, `noUncheckedIndexedAccess: true`); không `any` ngầm; `any` tường minh phải có comment lý do.
@@ -54,7 +56,7 @@ Checklist bắt buộc trước khi merge mã backend và trước G4:
 - [ ] Việc nặng/chậm chạy ở hàng đợi nền, không chặn request.
 - [ ] Asset tĩnh phục vụ qua CDN/hosting tĩnh, không qua server ứng dụng.
 - [ ] Backend lỗi thì ứng dụng vẫn ở mức dùng được tối thiểu, có thông báo rõ (không bắt buộc offline-first nếu dự án không cần).
-- [ ] Load test với số người dùng mục tiêu (ghi trong ADR) trước G4; lưu kết quả vào `studio/reports/qa/`.
+- [ ] Load test với số người dùng mục tiêu (ghi trong ADR) trước G4, bắt đầu từ `studio/templates/load-test.js` (k6); lưu kết quả vào `studio/reports/qa/`.
 
 ## 5. Review kiến trúc mỗi mốc
 `web-tech-architect` chấm từng mục §2–§3 (và §4 nếu có backend): **đạt / vi phạm chặn / nợ kỹ thuật chấp nhận được**. Vi phạm chặn → mốc không đạt. Nợ kỹ thuật → ghi vào `studio/BACKLOG.md` kèm mốc trả nợ. Dự án onboarding từ code có sẵn: chênh lệch với §2–§4 phát hiện ở M0 ghi thành nợ kỹ thuật ngay, không chặn mốc đầu (xem `SKILL.md` mục Khởi tạo).

@@ -29,6 +29,9 @@ Bảng này là **nguồn duy nhất** của lệnh kiểm chứng; `studio/ENGI
 | Lint | none | . |
 | Typecheck | none | . |
 | Build | none | . |
+| Quét lỗ hổng dependency | none | . |
+| SAST (Semgrep) | none | . |
+| Load test (k6, khi có backend) | none | . |
 | Chạy local / URL xem thử | none | . |
 
 ## Chuẩn kỹ thuật

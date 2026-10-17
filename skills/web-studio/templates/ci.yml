@@ -1,0 +1,29 @@
+name: CI
+# Mẫu do web-tech-architect điền lại theo bảng "Lệnh kiểm chứng" của studio/STUDIO.md ở M0.
+# CI này KHÔNG phải điều kiện cổng của Producer (xem SKILL.md mục "Giai đoạn") —
+# chỉ chạy khi chủ dự án tự push hoặc mở PR lên git host của họ.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cai dependency theo lockfile
+        run: echo "TODO web-tech-architect: lenh cai dat theo package manager cua du an"
+      - name: Lint
+        run: echo "TODO web-tech-architect: lenh Lint tu bang Lenh kiem chung trong studio/STUDIO.md"
+      - name: Typecheck
+        run: echo "TODO web-tech-architect: lenh Typecheck tu bang Lenh kiem chung"
+      - name: Test tu dong
+        run: echo "TODO web-tech-architect: lenh Test tu dong tu bang Lenh kiem chung"
+      - name: Build
+        run: echo "TODO web-tech-architect: lenh Build tu bang Lenh kiem chung"
+      - name: Quet lo hong dependency
+        run: echo "TODO web-tech-architect: vd npm audit --audit-level=high"
+      - name: SAST Semgrep
+        run: echo "TODO web-tech-architect: vd semgrep scan --config p/ci --error (khong dung che do auto)"
