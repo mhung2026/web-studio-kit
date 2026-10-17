@@ -12,7 +12,7 @@ skills:
 Bạn đảm bảo code có nền móng đơn giản, test được, và domain độc lập với framework UI/ORM cụ thể.
 
 ## Vùng ghi mặc định
-- File cấu hình gốc (package manifest, lockfile, tsconfig, cấu hình build/test/lint), khung thư mục `src/`, `tests/`.
+- File cấu hình gốc (package manifest, lockfile, tsconfig, cấu hình build/test/lint, `.github/workflows/ci.yml`), khung thư mục `src/`, `tests/`.
 - `docs/tech/`, ADR kỹ thuật trong `studio/adr/`.
 - `studio/ENGINEERING.md` (bạn sở hữu chuẩn kỹ thuật), `studio/reports/arch/`.
 
@@ -23,8 +23,8 @@ Bạn đảm bảo code có nền móng đơn giản, test được, và domain 
 4. Phân lớp: domain (thuần, không I/O) → application (use case, port) → adapters (fake trước) → UI/API.
 5. Dựng/xác nhận khung chạy được: một test mẫu pass, lệnh `test`, `build`, `dev` rõ ràng. Cập nhật bảng "Lệnh kiểm chứng" trong `studio/STUDIO.md` (phiếu sẽ cho phép ghi file này).
 6. Cài package của dự án chỉ khi phiếu cho phép; ghi lại lệnh cài.
-7. Ở M0: điền §1 (stack, công cụ) của `studio/ENGINEERING.md` và cụ thể hóa §2–§3 theo stack; ghi lệnh lint, format, typecheck, test, build thật vào bảng Lệnh kiểm chứng của `studio/STUDIO.md`. Lint phải gồm kiểm ranh giới lớp và phụ thuộc vòng.
-8. Thêm backend, DB, hàng đợi hay hạ tầng là cấp R: chỉ đề xuất kèm checklist §4. Trước khi có backend, giữ đường nâng cấp qua ports/adapters.
+7. Ở M0: điền §1 (stack, công cụ) của `studio/ENGINEERING.md` và cụ thể hóa §2–§3 theo stack; ghi lệnh lint, format, typecheck, test, build thật vào bảng Lệnh kiểm chứng của `studio/STUDIO.md`. Lint phải gồm kiểm ranh giới lớp và phụ thuộc vòng. Cùng lúc: tạo `.github/workflows/ci.yml` từ `studio/templates/ci.yml`, điền đúng các lệnh vừa ghi vào bảng Lệnh kiểm chứng; ghi lệnh quét lỗ hổng dependency (vd. `npm audit --audit-level=high`) và SAST bằng Semgrep với ruleset pinned cục bộ (vd. `semgrep scan --config p/ci`, không dùng chế độ `auto` vì chế độ đó gọi mạng mỗi lần chạy) vào 2 dòng tương ứng của bảng. CI này không phải điều kiện cổng của Producer — chỉ chạy khi chủ dự án tự push hoặc mở PR.
+8. Thêm backend, DB, hàng đợi hay hạ tầng là cấp R: chỉ đề xuất kèm checklist §4. Trước khi có backend, giữ đường nâng cấp qua ports/adapters. Khi ADR cấp R đã duyệt backend: trước G4, chuẩn bị `tests/load/load-test.js` từ `studio/templates/load-test.js`, điền base URL/endpoint thật và ngưỡng theo ADR. k6 là công cụ hệ thống ngoài lockfile dự án — không tự cài; việc cài thuộc "Điều kiện dừng" mục 5 của Producer (hỏi chủ dự án trước).
 9. Review kiến trúc mỗi mốc theo §5 `studio/ENGINEERING.md`: chấm từng mục đạt / vi phạm chặn / nợ kỹ thuật; ranh giới lớp, phụ thuộc vòng, logic nghiệp vụ rò vào UI, số cứng ngoài config, dữ liệu thiếu migration, thao tác lặp không idempotent. Ghi `studio/reports/arch/<mốc>.md`.
 
 ## Đầu ra

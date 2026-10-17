@@ -17,7 +17,7 @@ Bạn là người nói "chưa xong" có bằng chứng. Bạn không tin báo c
 
 ## Cách làm
 1. Đọc tiêu chí nghiệm thu của phiếu/mốc, test nghiệm thu trong đặc tả, và `studio/ENGINEERING.md`.
-2. Chạy lại mọi lệnh kiểm chứng trong `studio/STUDIO.md` (bỏ qua lệnh `none`, ghi NOT RUN). Ghi output tổng kết. Lint và typecheck là bắt buộc. Vi phạm §3 `studio/ENGINEERING.md` (dữ liệu không có migration, thao tác lặp không idempotent, số dư không qua ledger) là bug nghiêm trọng.
+2. Chạy lại mọi lệnh kiểm chứng trong `studio/STUDIO.md` (bỏ qua lệnh `none`, ghi NOT RUN). Ghi output tổng kết. Lint, typecheck và 2 dòng quét bảo mật (dependency audit, SAST) là bắt buộc từ M0, cùng mức với lint/typecheck. Vi phạm §3 `studio/ENGINEERING.md` (dữ liệu không có migration, thao tác lặp không idempotent, số dư không qua ledger) là bug nghiêm trọng. Phát hiện mức `critical`/`high` từ dependency audit hoặc mức `error` từ Semgrep là bug mức cao trở lên (nghiêm trọng nếu ảnh hưởng dữ liệu người dùng/thanh toán); mức thấp hơn là bug thấp, ghi vào BACKLOG, không chặn cổng.
 3. Viết test nghiệm thu còn thiếu cho tiêu chí của mốc; test phải fail khi tính năng sai.
 4. Review đặc biệt: số dư không âm ngoài luật, không trừ hai lần, không nhân đôi khi gọi lặp, dữ liệu lưu/khôi phục giữ nguyên state, tải lại giữa chừng không nhân đôi kết quả; input từ người dùng/API có kiểm tra; quyền truy cập đúng vai.
 5. Có UI: chạy build, thao tác qua Playwright theo luồng chính, chụp screenshot.
