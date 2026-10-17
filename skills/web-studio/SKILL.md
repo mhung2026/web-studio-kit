@@ -60,7 +60,7 @@ Không dùng `superpowers:subagent-driven-development` và `superpowers:executin
 ## Lập phiếu và giao việc
 1. Phiếu `studio/tickets/T-NNN-<slug>.md` theo `templates/ticket.md` (NNN tăng dần, không dùng lại). Vùng ghi phải cụ thể (thư mục/file), lấy từ bảng vùng ghi trong STUDIO.md hoặc vùng mặc định của agent.
    - Số dùng chung do Producer cấp trước trong phiếu: số ADR (`studio/adr/NNNN-<slug>.md`) và dải `BUG-NNN`. Agent không tự đặt số.
-   - Phiếu M0 của `web-tech-architect` luôn có `studio/STUDIO.md` và `studio/ENGINEERING.md` trong vùng ghi.
+   - Phiếu M0 của `web-tech-architect` luôn có `studio/STUDIO.md` và `studio/ENGINEERING.md` trong vùng ghi, và yêu cầu dựng CI (`.github/workflows/ci.yml`) cùng 2 lệnh quét bảo mật ngay cùng lúc với lệnh lint/typecheck/test/build.
    - Phiếu có Playwright: thêm `studio/reports/screens/T-NNN/` vào vùng ghi và ghi "mọi screenshot phải truyền `filename` trong thư mục này".
    - Phiếu của `web-ux-designer` cần build chạy: Producer khởi động build/dev server (lệnh "Chạy local" trong STUDIO.md, chạy nền), ghi URL vào phiếu, tắt sau khi nhận báo cáo.
    - Cài package theo lockfile được phép khi phiếu ghi rõ; việc này không tính là "hành động ra ngoài máy".
@@ -80,7 +80,7 @@ Không dùng `superpowers:subagent-driven-development` và `superpowers:executin
    - File không thuộc vùng của phiếu đang chạy nào → vi phạm của phiếu vừa báo cáo: đọc nội dung, rồi khôi phục (`git checkout -- <file>`) hoặc xóa (file mới); ghi vào phiếu, giao lại hoặc tạo phiếu cho đúng vai.
 2. Tự chạy lại các lệnh trong mục "Lệnh kiểm chứng" của phiếu. Quy tắc `none`: điều kiện cổng nào có lệnh `none` = **KHÔNG ĐẠT**, ghi `NOT RUN (none)` vào STATUS, không bao giờ ghi "pass". Cách gỡ: mở phiếu tạo lệnh đó (validator đặc tả → `product-owner` hoặc `web-design-auditor`; test/lint/typecheck/build → `web-tech-architect`), hoặc ghi D-NNN để chủ dự án chấp nhận rõ ràng việc không có lệnh này.
 3. Phiếu `backend-engineer`/`frontend-engineer` chạm code đã có hành vi đang chạy mà **không** có phiếu `impact-analyst` đi trước trong "Đọc trước" → coi như chưa đủ điều kiện, `trả lại`, mở phiếu `impact-analyst` trước rồi mới giao lại.
-4. Phiếu của `backend-engineer`/`frontend-engineer` → đặt phiếu engineer ở `chờ QA` và tạo phiếu `web-qa-engineer`. Phiếu engineer chỉ thành `xong` khi QA kết luận ĐẠT. Lint và typecheck trong STUDIO.md là lệnh bắt buộc từ M0; còn `none` sau M0 là lỗi cổng.
+4. Phiếu của `backend-engineer`/`frontend-engineer` → đặt phiếu engineer ở `chờ QA` và tạo phiếu `web-qa-engineer`. Phiếu engineer chỉ thành `xong` khi QA kết luận ĐẠT. Lint, typecheck và 2 dòng quét bảo mật (dependency audit, SAST) trong STUDIO.md là lệnh bắt buộc từ M0; còn `none` sau M0 là lỗi cổng.
 5. Đạt → cập nhật phiếu (`xong`), STATUS, BACKLOG; commit `T-NNN: <tóm tắt>` gồm file trong vùng ghi của phiếu **và** sổ sách `studio/` của phiếu đó.
 6. Không đạt → `trả lại`, tăng `Lần thử`, giao lại kèm lý do cụ thể. `Lần thử` vượt 3 → không giao lại nữa, BACKLOG ghi `chặn`, xét điều kiện dừng 3. Mỗi lần cổng thất bại, tăng "Số lần thất bại" của cổng hiện tại trong STATUS.
 7. Đề xuất ADR và "Việc ngoài vùng" → đưa vào BACKLOG.
@@ -98,8 +98,8 @@ Không chắc cấp → cấp cao hơn. Áp dụng ADR: sửa đồng bộ docs 
 - **G0 Ý tưởng:** Producer dùng `superpowers:brainstorming` làm brief cùng chủ dự án → `product-owner` hoàn thiện brief. Dừng: chủ dự án duyệt brief.
 - **G1 Tiền sản xuất / Onboarding:** song song `web-design-auditor` (rà toàn bộ) + `product-owner` (hoàn thiện spec). Dự án đã có code từ trước → thêm `web-tech-architect` + `impact-analyst` quét codebase (xem Khởi tạo bước 4). Xử lý ADR. Sau đó theo nhu cầu: `web-ux-designer` (spec màn hình mốc đầu có UI), `web-tech-architect` (stack + ADR kỹ thuật nếu dự án mới). Cổng: validator pass (lệnh `none` = không đạt), không câu R nào chặn mốc đầu.
 - **G2 Sản xuất:** lặp **Vòng mốc** cho từng mốc trong kế hoạch.
-- **G3 Hoàn thiện:** `web-qa-engineer` regression toàn bộ ⇄ `web-ux-designer` duyệt screenshot mọi màn hình chính, engineer sửa → QA chạy lại. Cổng: 0 bug nghiêm trọng, mọi màn hình/luồng chính qua được, accessibility cơ bản không chặn.
-- **G4 Release candidate:** `web-qa-engineer` full regression → `web-release-manager` đóng gói (version, changelog, release notes, DEPLOY_GUIDE). Dừng: chủ dự án duyệt phát hành (deploy do chủ dự án tự làm).
+- **G3 Hoàn thiện:** `web-qa-engineer` regression toàn bộ ⇄ `web-ux-designer` duyệt screenshot mọi màn hình chính, engineer sửa → QA chạy lại. Cổng: 0 bug nghiêm trọng, không còn phát hiện mức cao/nghiêm trọng chưa xử lý từ quét dependency/SAST, mọi màn hình/luồng chính qua được, accessibility cơ bản không chặn.
+- **G4 Release candidate:** `web-qa-engineer` full regression → `web-release-manager` đóng gói (version, changelog, release notes, DEPLOY_GUIDE). Có backend: load test đã chạy đạt ngưỡng ADR (`ENGINEERING.md` §4), kết quả lưu `studio/reports/qa/`. CI không phải điều kiện cổng — chỉ là tiện ích khi chủ dự án tự push/mở PR, không ảnh hưởng việc Producer chấm cổng này. Dừng: chủ dự án duyệt phát hành (deploy do chủ dự án tự làm).
 - **G5 Sau phát hành:** phản hồi → BACKLOG → lặp G2–G4 thu nhỏ.
 
 ## Vòng mốc
