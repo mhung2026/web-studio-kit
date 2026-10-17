@@ -68,8 +68,10 @@ Không dùng `superpowers:subagent-driven-development` và `superpowers:executin
 3. Ghi phiếu vào bảng "Phiếu đang chạy" của STATUS, rồi **commit sổ sách trước khi gọi**: `chore(studio): dispatch T-NNN` (phiếu + STATUS + BACKLOG). Commit này là mốc so sánh của phiếu.
 4. Gọi Agent tool với `subagent_type` = tên agent, prompt:
    `Phiếu: studio/tickets/T-NNN-<slug>.md. Đọc studio/STUDIO.md rồi phiếu, làm đúng phạm vi và vùng ghi, trả báo cáo theo studio/templates/report.md.`
+   Phiếu này là phiếu **duy nhất đang chạy** (không có phiếu nào khác song song, không còn việc gì khác để làm trong lúc chờ) → gọi **foreground** (`run_in_background: false`): kết quả về ngay trong cùng lượt gọi, không phụ thuộc thông báo nền. Còn phiếu khác đang chạy song song → gọi nền (mặc định).
 5. Chạy song song tối đa 4 phiếu khi vùng ghi **không giao nhau**, kể cả lồng nhau.
 6. Agent gọi lỗi/không tồn tại → kiểm `~/.claude/agents/<tên>.md`, báo chủ dự án cài kit (`install.ps1`) hoặc tải lại cửa sổ. Tên bắt đầu `web-` mà không thấy → có thể máy chỉ cài `game-studio-kit`, chưa cài `web-studio-kit`.
+7. Một phiếu chạy nền trở thành phiếu chặn duy nhất còn lại (phiếu song song khác vừa báo cáo xong) mà không còn việc gì khác để làm → trước khi kết thúc lượt với "đang chờ T-NNN", đặt một job `CronCreate` một lần (`recurring: false`), 20–30 phút, prompt tự kiểm: chạy `git status --porcelain --untracked-files=all`, thấy file trong vùng ghi của phiếu thì đọc và chạy "Kiểm sau mỗi báo cáo" ngay; chưa có thì đặt lại job 20–30 phút nữa. Lý do: thông báo hoàn thành tự động của agent nền có thể không tới khi phiên nghỉ dài hoặc qua đêm — không được chỉ "đang chờ" suông rồi phó mặc chủ dự án tự nhắc. Phiếu báo cáo xong (qua thông báo nền hoặc qua job tự kiểm) → hủy job còn lại bằng `CronDelete`.
 
 ## Kiểm sau mỗi báo cáo
 1. Chạy `git status --porcelain --untracked-files=all` (thêm `--ignored` khi nghi ngờ). Sổ sách đã commit lúc giao phiếu, nên mọi dòng ở đây là việc của các phiếu đang chạy.
@@ -126,7 +128,7 @@ Chuyển G1→G2, G2→G3, G3→G4: gửi báo cáo tóm tắt rồi chạy ti�
 ## Tiếp tục sau gián đoạn
 Khi phiên bị ngắt hoặc ngữ cảnh đã nén, không dựa vào trí nhớ:
 1. Đọc STATUS (giai đoạn, mốc, cổng hiện tại + số lần thất bại, bảng phiếu đang chạy), BACKLOG, `git log --oneline -20`, `git status --porcelain --untracked-files=all`.
-2. Agent nền có thể vẫn đang chạy: kiểm danh sách agent/tác vụ nền trước. Phiếu còn agent chạy → chờ báo cáo, không xét file của nó.
+2. Agent nền có thể vẫn đang chạy, hoặc đã xong mà thông báo chưa tới (xem mục 7 ở "Lập phiếu và giao việc"): dùng `GetTask` (còn nhớ taskId) và luôn đối chiếu `git status` — đừng chỉ tin trạng thái "đang làm" cũ chép trong STATUS. Agent thật sự còn chạy → chờ báo cáo, không xét file của nó. Đã có file trong vùng ghi dù STATUS còn ghi "đang làm" (kể cả khi chủ dự án là người báo, không phải thông báo hệ thống) → coi như đã báo cáo, chạy ngay "Kiểm sau mỗi báo cáo".
 3. Với từng phiếu trong bảng:
    - `xong` và có commit `T-NNN` → bỏ qua.
    - `chờ QA` → chưa xong; tạo hoặc chờ phiếu `web-qa-engineer`.
