@@ -17,6 +17,7 @@ TEMPLATES = [
     "report.md", "adr.md", "milestone-report.md", "impact-report.md",
     "DEPLOY_GUIDE.md", "ENGINEERING.md",
 ]
+EXTRA_TEMPLATE_FILES = ["ci.yml", "load-test.js"]
 KNOWN_TOOLS = {
     "Read", "Write", "Edit", "Grep", "Glob", "Bash", "PowerShell", "WebFetch",
     "WebSearch", "NotebookEdit", "TodoWrite", "Skill",
@@ -26,9 +27,11 @@ REQUIRED_HEADINGS = ["## Vai trò", "## Vùng ghi mặc định", "## Cách làm
 REQUIRED_SKILL_SNIPPETS = [
     "git status --porcelain --untracked-files=all",
     "docs/superpowers",  # Producer phải ghi đè nơi lưu mặc định của brainstorming/writing-plans
+    "SAST",
+    "load test",
 ]
 DISCIPLINE_SNIPPETS = ["Chỉ gọi skill có trong mục \"Skill hỗ trợ\" của mình"]
-TEMPLATE_SNIPPETS = {"ticket.md": ["Ngoại lệ TDD"]}
+TEMPLATE_SNIPPETS = {"ticket.md": ["Ngoại lệ TDD"], "STUDIO.md": ["dependency", "SAST"]}
 NONE_GUIDANCE = "không ai được báo \"pass\""
 KIT_VERSION_RE = re.compile(r"^Kit-version:\s*(\S+)\s*$", re.M)
 REQUIRED_SKILL_HEADINGS = ["## Tiếp tục sau gián đoạn"]
@@ -186,6 +189,9 @@ def check_skill(root):
             errors.append(f"SKILL.md: thiếu mục '{heading}'")
     templates_dir = skill_dir / "templates"
     for name in TEMPLATES:
+        if not (templates_dir / name).exists():
+            errors.append(f"templates/{name}: không tồn tại")
+    for name in EXTRA_TEMPLATE_FILES:
         if not (templates_dir / name).exists():
             errors.append(f"templates/{name}: không tồn tại")
     for ref in set(template_refs(body, "templates/")):

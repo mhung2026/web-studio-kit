@@ -136,6 +136,8 @@ class KitChecks(unittest.TestCase):
             snippets = "\n".join(check_kit.TEMPLATE_SNIPPETS.get(name, []))
             (tpl / name).write_text(f'Kit-version: 9.9.9\nLệnh `none`: không ai được báo "pass".\n{snippets}\n',
                                     encoding="utf-8")
+        for name in check_kit.EXTRA_TEMPLATE_FILES:
+            (tpl / name).write_text("placeholder\n", encoding="utf-8")
         for name in check_kit.EXPECTED_AGENTS:
             extra = "Đọc `studio/ENGINEERING.md`." if name in check_kit.ENGINEERING_AGENTS else ""
             (self.root / "agents" / f"{name}.md").write_text(agent_text(name=name, body_extra=extra), encoding="utf-8")
@@ -255,6 +257,21 @@ class KitChecks(unittest.TestCase):
         skill = self.root / "skills" / "web-studio" / "SKILL.md"
         skill.write_text(skill.read_text(encoding="utf-8").replace("`impact-analyst`", "`x`"), encoding="utf-8")
         self.assertTrue(any("impact-analyst" in e for e in check_kit.check_kit(self.root)))
+
+    def test_ci_and_load_test_templates_required(self):
+        (self.root / "skills" / "web-studio" / "templates" / "ci.yml").unlink()
+        self.assertTrue(any("ci.yml" in e for e in check_kit.check_kit(self.root)))
+
+    def test_studio_template_must_mention_security_scans(self):
+        path = self.root / "skills" / "web-studio" / "templates" / "STUDIO.md"
+        path.write_text('Kit-version: 9.9.9\nLệnh `none`: không ai được báo "pass".\n', encoding="utf-8")
+        errors = check_kit.check_kit(self.root)
+        self.assertTrue(any("STUDIO.md" in e and "dependency" in e for e in errors))
+
+    def test_skill_must_mention_security_and_load_test_gates(self):
+        skill = self.root / "skills" / "web-studio" / "SKILL.md"
+        skill.write_text(skill.read_text(encoding="utf-8").replace("SAST", "x"), encoding="utf-8")
+        self.assertTrue(any("SAST" in e for e in check_kit.check_kit(self.root)))
 
 
 class SyncDiscipline(unittest.TestCase):
