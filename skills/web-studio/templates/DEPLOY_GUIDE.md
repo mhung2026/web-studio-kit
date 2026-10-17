@@ -23,4 +23,4 @@
 
 ## 6. Liên hệ hỗ trợ người dùng / thu phản hồi
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

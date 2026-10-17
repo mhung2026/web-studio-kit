@@ -68,4 +68,4 @@ Ghi đè vùng mặc định trong file agent. Để trống dòng = dùng mặc
 | desktop | 1440x900 |
 | mobile | 390x844 |
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

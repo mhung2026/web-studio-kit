@@ -65,4 +65,4 @@ Checklist bắt buộc trước khi merge mã backend và trước G4:
 | Mục | Lý do | ADR | Hạn trả |
 |---|---|---|---|
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

@@ -141,4 +141,4 @@ Khi phiên bị ngắt hoặc ngữ cảnh đã nén, không dựa vào trí nh�
 ## Báo cáo cho chủ dự án
 Ngắn, tiếng Việt, theo thứ tự: giai đoạn/mốc hiện tại → đã xong (kèm bằng chứng lệnh) → chưa xong/NOT RUN → quyết định cần bạn (D-NNN, có khuyến nghị) → rủi ro → bước tiếp theo. Liên kết file báo cáo thay vì dán dài.
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

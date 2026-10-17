@@ -21,4 +21,4 @@
 ## Ghi chú cho lần tiếp tục
 -
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

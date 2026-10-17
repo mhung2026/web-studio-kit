@@ -33,4 +33,4 @@ Không làm:
 ## Báo cáo
 Agent trả về theo `studio/templates/report.md`. Producer lưu tóm tắt và kết quả kiểm lại vào cuối phiếu này.
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

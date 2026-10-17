@@ -9,6 +9,7 @@ Kit này là bản nhân từ `game-studio-kit` (cùng chủ dự án, cùng cơ
 - `skills/web-studio/` — skill Producer (phiên chính điều phối) và template.
 - `skills/web-studio/templates/ENGINEERING.md` — chuẩn code, dữ liệu/migration và checklist sẵn sàng scale; mỗi dự án có bản `studio/ENGINEERING.md`, review kiến trúc mỗi mốc.
 - `tools/check_kit.py` — kiểm cấu trúc kit; `tools/discipline.md` — bản gốc khối "Kỷ luật chung" của mọi agent.
+- `skills/web-studio/templates/ci.yml`, `load-test.js` — mẫu CI (GitHub Actions, không phải CD — vẫn không tự deploy) và mẫu load test (k6); `web-tech-architect` điền cụ thể ở M0 (CI, quét bảo mật) và trước G4 khi có backend (load test).
 - `docs/specs/`, `docs/plans/` — thiết kế và kế hoạch.
 
 ## Cài đặt
@@ -50,3 +51,4 @@ Trong thư mục dự án web/app:
 - `web-ux-designer`/`web-qa-engineer`/`frontend-engineer` cần plugin Playwright MCP (`mcp__plugin_playwright_playwright`).
 - Kiểm vùng ghi của Producer dựa trên `git status`; file agent ghi ra ngoài repo không bị phát hiện. Muốn chặn cứng, thêm hook PreToolUse hoặc deny rules.
 - Không có vai nghiên cứu thị trường (khác `game-studio-kit`) — kit này là công cụ hỗ trợ code nội bộ.
+- CI có sẵn chỉ chạy khi chủ dự án tự push/mở PR lên git host; không phải điều kiện cổng Producer tự kiểm, và không tự deploy (CD vẫn do chủ dự án làm).

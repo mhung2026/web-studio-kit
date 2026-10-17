@@ -13,4 +13,4 @@
 - Việc vẫn làm được trong lúc chờ:
 - Trả lời của chủ dự án:
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0

@@ -3,4 +3,4 @@
 |---|---|---|---|---|---|
 Trạng thái dùng: `chờ`, `đang làm`, `chặn bởi D-NNN`, `xong`, `bỏ`.
 
-Kit-version: 0.1.0
+Kit-version: 0.2.0
